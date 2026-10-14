@@ -1,18 +1,18 @@
 #!/bin/bash
-# Simple script to save and push Coderbyte solutions
+# Save and push Coderbyte solutions automatically
 
 echo "Enter challenge name:"
 read name
 
-# Create a solutions folder if it doesn't exist
 mkdir -p solutions
 
-# Save pasted code into a file named after the challenge
-file="solutions/${name}.py"
-echo "Paste your code below (Ctrl+D to finish):"
-cat > $file
+# Replace spaces with underscores for safe filenames
+safe_name=$(echo "$name" | tr ' ' '_')
+file="solutions/${safe_name}.py"
 
-# Add, commit, and push to GitHub
-git add $file
+echo "Paste your code below (Ctrl+D to finish):"
+cat > "$file"
+
+git add "$file"
 git commit -m "Add solution for $name"
-git push
+git push origin main
